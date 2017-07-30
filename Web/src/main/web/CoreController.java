@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import util.CommonUtil;
 import web.modules.ModuleController;
 
 @RestController
@@ -12,23 +13,23 @@ public class CoreController {
 
     @Autowired
     @Qualifier("moduleController")
-    private ModuleController moduleController;
+    public static ModuleController moduleController = new ModuleController();
 
     /*
-        Desc : Load /
+        Desc : Load "/"
      */
     @RequestMapping(value="/")
-    public String index(@PathVariable String path) {
+    public String index() {
         return moduleController.getViewName("/");
     }
 
     /*
         Desc : Load page
      */
-    @RequestMapping(value="/{path}")
+    @RequestMapping(value="{path}")
     public String page(@PathVariable String path) {
 
-        if(path.isEmpty()){
+        if(CommonUtil.isNullString(path)){
             System.out.println("Path is empty.");
         }else{
             System.out.println("Path is "+path);

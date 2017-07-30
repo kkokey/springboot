@@ -8,9 +8,15 @@ import java.util.HashMap;
 public class ModuleController {
 
     public static HashMap viewModuleMap = new HashMap();
+
+    public ModuleController() {
+        getViewModule();
+        System.out.println(viewModuleMap);
+    }
+
     /*
         Desc : Get View Name.
-     */
+    */
     public HashMap getViewModule() {
         // TODO How about make jar file from implementation??
         // get Jar file.
@@ -18,12 +24,17 @@ public class ModuleController {
 
         // Add View name.
         // If you want view name save db.
-        viewModuleMap.put("/","getViewModule path '/'<br>This page is root.");
-        viewModuleMap.put("/index","getViewModule path '/index'<br>This page is index");
+        this.viewModuleMap.put("/","getViewModule path '/'<br>This page is root.");
+        this.viewModuleMap.put("/index","getViewModule path '/index'<br>This page is index");
         return viewModuleMap;
     }
 
     public String getViewName(String viewNameKeyValue){
+        System.out.println("viewNameKeyValue ["+viewNameKeyValue+"]");
+
+        if(String.valueOf(this.viewModuleMap.get("/"+viewNameKeyValue)).equals("") || viewNameKeyValue.equals("/")){
+            return String.valueOf(this.viewModuleMap.get("/"));
+        }
         return String.valueOf(this.viewModuleMap.get("/"+viewNameKeyValue));
     }
 }
