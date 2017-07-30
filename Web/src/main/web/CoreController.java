@@ -2,24 +2,38 @@ package web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import web.modules.ControllerModule;
-
-import java.util.HashMap;
+import web.modules.ModuleController;
 
 @RestController
 public class CoreController {
 
     @Autowired
-    @Qualifier("controllerModule")
-    private ControllerModule controllerModule;
+    @Qualifier("moduleController")
+    private ModuleController moduleController;
 
-    @RequestMapping("/")
-    public String index() {
-        HashMap viewModule = controllerModule.getViewModule();
+    /*
+        Desc : Load /
+     */
+    @RequestMapping(value="/")
+    public String index(@PathVariable String path) {
+        return moduleController.getViewName("/");
+    }
 
-        String rsViewStr = String.valueOf(viewModule.get("//"));
-        return rsViewStr;
+    /*
+        Desc : Load page
+     */
+    @RequestMapping(value="/{path}")
+    public String page(@PathVariable String path) {
+
+        if(path.isEmpty()){
+            System.out.println("Path is empty.");
+        }else{
+            System.out.println("Path is "+path);
+        }
+
+        return moduleController.getViewName(path);
     }
 }
