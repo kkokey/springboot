@@ -1,33 +1,42 @@
 package web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import util.CommonUtil;
 import web.modules.ModuleController;
 
-@RestController
+@Controller
 public class CoreController {
+    private Logger logger = LoggerFactory.getLogger(ModuleController.class);
 
     @Autowired
-    @Qualifier("moduleController")
-    public static ModuleController moduleController = new ModuleController();
+    public ModuleController moduleController;
 
     /*
         Desc : Load "/"
      */
     @RequestMapping(value="/")
-    public String index() {
-        return moduleController.getViewName("/");
+    public String index(Model model) {
+        System.out.println("[[[[[Into the /]]]]]");
+        String viewName = moduleController.getViewName("/");
+        logger.info(viewName);
+        viewName = "index";
+        model.addAttribute("header","path \\");
+        model.addAttribute("rs","index page");
+        return viewName;
     }
 
     /*
         Desc : Load page
      */
     @RequestMapping(value="{path}")
-    public String page(@PathVariable String path) {
+    public String page(@PathVariable String path, Model model) {
+        System.out.println("[[[[[Into the path]]]]]");
 
         if(CommonUtil.isNullString(path)){
             System.out.println("Path is empty.");
@@ -35,6 +44,14 @@ public class CoreController {
             System.out.println("Path is "+path);
         }
 
-        return moduleController.getViewName(path);
+        String viewName = moduleController.getViewName(path);
+        logger.info(viewName);
+        viewName = "index";
+
+        String rs = moduleController.getSelectOne("root");
+
+        model.addAttribute("header","index "+path);
+        model.addAttribute("rs", rs);
+        return viewName;
     }
 }

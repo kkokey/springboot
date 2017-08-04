@@ -1,40 +1,64 @@
 package web.modules;
 
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import web.modules.db.mapper.DbInfoMapper;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
+import org.slf4j.Logger;
 
 @Repository
 public class ModuleController {
 
-    public static HashMap viewModuleMap = new HashMap();
+    private Logger logger = LoggerFactory.getLogger(ModuleController.class);
+
+    @Autowired
+    DbInfoMapper dbInfoMapper;
+    private HashMap viewModuleMap;
+
 
     public ModuleController() {
-        getViewModule();
-        System.out.println(viewModuleMap);
+        viewModuleMap = new HashMap();
+        viewModuleMap.put("/","getViewModule path '/'<br>This page is root.");
+        viewModuleMap.put("/index","getViewModule path '/index'<br>This page is index");
     }
 
     /*
         Desc : Get View Name.
     */
-    public HashMap getViewModule() {
+    public void setDefaultData() {
         // TODO How about make jar file from implementation??
         // get Jar file.
+        // Just default concept is get view name from db.
         // Just thinking - 2017.07.26
 
         // Add View name.
-        // If you want view name save db.
-        this.viewModuleMap.put("/","getViewModule path '/'<br>This page is root.");
-        this.viewModuleMap.put("/index","getViewModule path '/index'<br>This page is index");
-        return viewModuleMap;
+
     }
 
     public String getViewName(String viewNameKeyValue){
-        System.out.println("viewNameKeyValue ["+viewNameKeyValue+"]");
+//        System.out.println("viewNameKeyValue ["+viewNameKeyValue+"]");
+//        System.out.println("viewModuleMap:::START");
+//        System.out.println(viewModuleMap);
+//        System.out.println("viewModuleMap:::END");
 
-        if(String.valueOf(this.viewModuleMap.get("/"+viewNameKeyValue)).equals("") || viewNameKeyValue.equals("/")){
-            return String.valueOf(this.viewModuleMap.get("/"));
+        if(String.valueOf(viewModuleMap.get("/"+viewNameKeyValue)).equals("") || viewNameKeyValue.equals("/")){
+            return String.valueOf(viewModuleMap.get("/"));
         }
-        return String.valueOf(this.viewModuleMap.get("/"+viewNameKeyValue));
+        return String.valueOf(viewModuleMap.get("/"+viewNameKeyValue));
+    }
+
+    public String getSelectOne(String conVal){
+        String rsStr = "";
+        try {
+            ResultSet rs = dbInfoMapper.getSelectOne(conVal);
+            rsStr = rs.getString(0);
+        }catch (Exception e){
+            logger.error("error: ",e.getMessage());
+        }
+
+        return rsStr;
     }
 }

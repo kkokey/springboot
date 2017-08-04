@@ -12,17 +12,15 @@ import org.junit.Assert;
 import org.junit.Test;
 import web.modules.ModuleController;
 
-import java.util.HashMap;
-
 public class ModuleControllerTest {
 
     @Test
     public void getViewName(){
         ModuleController moduleController = new ModuleController();
-        HashMap hashMap = moduleController.getViewModule();
-        Assert.assertEquals("getViewModule path '/index'<br>This page is index", hashMap.get("/index"));
+//        moduleController.getViewModule();
+        Assert.assertEquals("getViewModule path '/index'<br>This page is index", moduleController.getViewName("/index"));
 
-        Assert.assertEquals("getViewModule path '/'<br>This page is root.", hashMap.get("/"));
+        Assert.assertEquals("getViewModule path '/'<br>This page is root.", moduleController.getViewName("/"));
 
 
     }
