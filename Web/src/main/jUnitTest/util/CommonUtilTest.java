@@ -1,14 +1,14 @@
 package jUnitTest.util;
 
+import junit.framework.TestCase;
 import org.junit.Assert;
-import org.junit.Test;
 import util.CommonUtil;
 
-public class CommonUtilTest {
-
-    @Test
-    public void isNullString() throws Exception {
+public class CommonUtilTest extends TestCase {
+    @org.junit.Test
+    public void isNullString1() throws Exception {
         String str = "";
+
         Assert.assertTrue(CommonUtil.isNullString(str));
 
         str = "string";
@@ -16,7 +16,7 @@ public class CommonUtilTest {
 
         str = null;
         Assert.assertTrue(!CommonUtil.isNullString(str));
-
     }
+
 
 }

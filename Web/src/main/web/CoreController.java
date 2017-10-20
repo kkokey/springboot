@@ -50,7 +50,7 @@ public class CoreController {
 
         String rs = moduleController.getSelectOne("root");
 
-        model.addAttribute("header","index "+path);
+        model.addAttribute("header","path is ["+path+"]");
         model.addAttribute("rs", rs);
         return viewName;
     }

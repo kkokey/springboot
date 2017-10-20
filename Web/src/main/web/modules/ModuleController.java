@@ -1,5 +1,6 @@
 package web.modules;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -7,7 +8,6 @@ import web.modules.db.mapper.DbInfoMapper;
 
 import java.sql.ResultSet;
 import java.util.HashMap;
-import org.slf4j.Logger;
 
 @Repository
 public class ModuleController {
@@ -15,7 +15,7 @@ public class ModuleController {
     private Logger logger = LoggerFactory.getLogger(ModuleController.class);
 
     @Autowired
-    DbInfoMapper dbInfoMapper;
+    private DbInfoMapper dbInfoMapper;
     private HashMap viewModuleMap;
 
 
@@ -54,6 +54,7 @@ public class ModuleController {
         String rsStr = "";
         try {
             ResultSet rs = dbInfoMapper.getSelectOne(conVal);
+            logger.info(String.valueOf(rs));
             rsStr = rs.getString(0);
         }catch (Exception e){
             logger.error("error: ",e.getMessage());

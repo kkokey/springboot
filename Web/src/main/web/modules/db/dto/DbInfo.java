@@ -1,8 +1,8 @@
 package web.modules.db.dto;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class DbInfo {
 
     private String name;
@@ -25,4 +25,5 @@ public class DbInfo {
     public void setUser(String user) {
         this.user = user;
     }
+
 }
