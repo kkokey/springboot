@@ -10,6 +10,8 @@ import static org.junit.Assert.*;
 
 public class AnalystTest {
 
+    private static Analyst analyst = new Analyst();
+
     public static final String testQuery = "CREATE TABLE `user` (\n" +
             "      `Host` char(60) COLLATE utf8_bin NOT NULL DEFAULT '',\n" +
             "      `User` char(16) COLLATE utf8_bin NOT NULL DEFAULT '',\n" +
@@ -56,6 +58,74 @@ public class AnalystTest {
             "      `password_expired` enum('N','Y') CHARACTER SET utf8 NOT NULL DEFAULT 'N',\n" +
             "      PRIMARY KEY (`Host`,`User`)\n" +
             "    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Users and global privileges'";
+
+    private TableInfo tbInfo = analyst.getTableInfo(testQuery);
+
+    @Test
+    public void getTableInfo() throws Exception {
+        assertTrue(tbInfo.getTableName().equalsIgnoreCase("user"));
+    }
+
+    @Test
+    public void getPrimaryKey() throws Exception {
+        for (String keyStr : tbInfo.getPrimaryKey()){
+            assertTrue(String.valueOf("PrimaryKey : ["+keyStr+"]"),
+                    ("PRIMARY KEY (`Host`,`User`)".toLowerCase().indexOf(keyStr.trim().toLowerCase()) >  -1));
+        }
+
+    }
+
+    @Test
+    public void getVariableName() throws Exception {
+    }
+
+    @Test
+    public void getVariableType() throws Exception {
+    }
+
+    @Test
+    public void getVariableLength() throws Exception {
+    }
+
+    @Test
+    public void getNullInfo() throws Exception {
+    }
+
+    @Test
+    public void getUnsignedInfo() throws Exception {
+    }
+
+    @Test
+    public void getDefaultVal() throws Exception {
+    }
+
+    @Test
+    public void getTableName() throws Exception {
+    }
+
+    @Test
+    public void getLastWord() throws Exception {
+    }
+
+    @Test
+    public void delSpecialChar() throws Exception {
+    }
+
+    @Test
+    public void delSpecialSelectChar() throws Exception {
+    }
+
+    @Test
+    public void delRoundBracketNGrave() throws Exception {
+    }
+
+    @Test
+    public void resetBracket() throws Exception {
+    }
+
+    @Test
+    public void isNumOnly() throws Exception {
+    }
 
     @Test
     public void getColumnList() throws Exception {
